@@ -14,15 +14,15 @@ Dq = 1e-9;
 
 % Calculate numerical Jacobian
 % Find positions as q changes a small amount of Dq
-p_Dq1 = fk_fsc( q + [Dq; 0; 0; 0; 0; 0] );
-p_Dq2 = fk_fsc( q + [0; Dq; 0; 0; 0; 0] );
-p_Dq3 = fk_fsc( q + [0; 0; Dq; 0; 0; 0] );
-p_Dq4 = fk_fsc( q + [0; 0; 0; Dq; 0; 0] );
-p_Dq5 = fk_fsc( q + [0; 0; 0; 0; Dq; 0] );
-p_Dq6 = fk_fsc( q + [0; 0; 0; 0; 0; Dq] );
+[p_Dq1, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [Dq; 0; 0; 0; 0; 0] );
+[p_Dq2, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [0; Dq; 0; 0; 0; 0] );
+[p_Dq3, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [0; 0; Dq; 0; 0; 0] );
+[p_Dq4, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [0; 0; 0; Dq; 0; 0] );
+[p_Dq5, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [0; 0; 0; 0; Dq; 0] );
+[p_Dq6, T01, T02, T03, T04, T05, T06] = fk_fsc( q + [0; 0; 0; 0; 0; Dq] );
 
 % Current wrist position: p(:,6)
-% Calculate a numerical Jacobian for hand of Jaco arm 
+% Calculate a numerical Jacobian for hand of fiber scope camera
 J = [(p_Dq1(:, 6)-p(:, 6))/Dq, ...
      (p_Dq2(:, 6)-p(:, 6))/Dq, ...
      (p_Dq3(:, 6)-p(:, 6))/Dq, ...

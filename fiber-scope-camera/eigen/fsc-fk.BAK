@@ -1,0 +1,103 @@
+#include <iostream>
+#include <cmath>
+#include <Eigen/Dense>
+
+Eigen::MatrixXd TransX(double x);
+Eigen::MatrixXd TransY(double y);
+Eigen::MatrixXd TransZ(double z);
+Eigen::MatrixXd RotX(double q);
+Eigen::MatrixXd RotY(double q);
+Eigen::MatrixXd RotZ(double q);
+
+int	main(int argc, char *argv[])
+{
+/*
+	Eigen::MatrixXd m(2, 2);
+	m(0, 0) = 3.0;
+	m(1, 0) = 2.5;
+	m(0, 1) = -1.0;
+	m(1, 1) = m(1, 0) + m(0, 1);
+*/
+
+	
+	std::cout << TransX(1.0) << std::endl;
+	std::cout << TransY(2.0) << std::endl;
+	std::cout << TransZ(3.0) << std::endl;
+	std::cout << RotX(1.0) << std::endl;
+	std::cout << RotY(2.0) << std::endl;
+	std::cout << RotZ(3.0) << std::endl;
+	return(0);
+}
+
+Eigen::MatrixXd TransX(double x)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m << 1.0, 0.0, 0.0, x,
+		 0.0, 1.0, 0.0, 0.0,
+		 0.0, 0.0, 1.0, 0.0,
+		 0.0, 0.0, 0.0, 1.0;
+	
+	return(m);
+}
+
+Eigen::MatrixXd TransY(double y)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m << 1.0, 0.0, 0.0, 0.0,
+		 0.0, 1.0, 0.0,   y,
+		 0.0, 0.0, 1.0, 0.0,
+		 0.0, 0.0, 0.0, 1.0;
+	
+	return(m);
+}
+
+Eigen::MatrixXd TransZ(double z)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m << 1.0, 0.0, 0.0, 0.0,
+		 0.0, 1.0, 0.0, 0.0,
+		 0.0, 0.0, 1.0,   z,
+		 0.0, 0.0, 0.0, 1.0;
+	
+	return(m);
+}
+
+
+Eigen::MatrixXd RotX(double q)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m << 1.0,    0.0,     0.0, 0.0,
+		 0.0, cos(q), -sin(q), 0.0,
+		 0.0, sin(q),  cos(q), 0.0,
+		 0.0,    0.0,     0.0, 1.0;
+	
+	return(m);
+}
+
+Eigen::MatrixXd RotY(double q)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m <<  cos(q), 0.0, sin(q), 0.0,
+	         0.0, 1.0,    0.0, 0.0,
+		 -sin(q), 0.0, cos(q), 0.0,
+	         0.0, 0.0,    0.0, 1.0;
+	
+	return(m);
+}
+
+Eigen::MatrixXd RotZ(double q)
+{
+	Eigen::MatrixXd m(4, 4);
+	
+	m << cos(q), -sin(q), 0.0, 0.0,
+		 sin(q),  cos(q), 0.0, 0.0,
+		    0.0,     0.0, 1.0, 0.0,
+		    0.0,     0.0, 0.0, 1.0;
+	
+	return(m);
+}
