@@ -1,0 +1,547 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: AgxSpiderx2
+
+TRACK_COMMON: &TrackCommon
+  parent: CHASSIS
+  jointType: fixed
+  centerOfMass: [ 0, 0, 0 ]
+  mass: 10.09
+  inertia: [ 0.022258, 0.0, 0.0, 0.0, 0.191695, 0.0, 0.0, 0.0, 0.178340 ]
+
+SUBTRACK_F_COMMON: &SubTrackFCommon
+  jointType: fixed
+  centerOfMass: [ 0, 0, 0 ]
+  mass: 10.05
+  inertia: [ 0.006072, 0.0, 0.0, 0.0, 0.057852, 0.0, 0.0, 0.0, 0.055192 ]
+
+SUBTRACK_R_COMMON: &SubTrackRCommon
+  jointType: fixed
+  centerOfMass: [ 0, 0, 0 ]
+  mass: 10.05
+  inertia: [ 0.006072, 0.0, 0.0, 0.0, 0.057852, 0.0, 0.0, 0.0, 0.055192 ]
+
+SPACER_COMMON: &SpacerCommon
+  parent: CHASSIS
+  jointType: revolute
+  jointAxis: -Y
+  mass: 5.42
+  inertia: [ 0.005159, 0.0, 0.0, 0.0, 0.010224, 0.0, 0.0, 0.0, 0.005159 ]
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.12
+        height: 0.02
+      appearance:
+        material:
+          diffuseColor: [ 0.99, 0.91, 0.31 ]
+          specularColor: [ 0.99, 0.91, 0.31 ]
+          shininess: 0.6
+
+TRACKBELT_COMMON: &TrackBeltCommon
+  upAxis: [ 0, 0, 1 ]
+  numberOfNodes: 80
+  nodeThickness: 0.010000
+  nodeWidth:  0.160000
+  nodeThickerThickness: 0.020000
+  useThickerNodeEvery: 5
+  material: AgxSpiderx2Tracks
+  nodeDistanceTension: 2.0e-3
+  stabilizingHingeFrictionParameter: 5.0e-6
+  minStabilizingHingeNormalForce: 100
+  hingeCompliance: 1.0e-6
+  hingeSpookDamping: 0.010000
+  nodesToWheelsMergeThreshold: -0.010000
+  nodesToWheelsSplitThreshold: -0.009000
+
+SUBTRACKBELT_COMMON: &SubTrackBeltCommon
+  upAxis: [ 0, 0, 1 ]
+  numberOfNodes: 50
+  nodeThickness: 0.010000
+  nodeWidth:  0.100000
+  nodeThickerThickness: 0.020000
+  useThickerNodeEvery: 6
+  material: AgxSpiderx2Tracks
+  nodeDistanceTension: 1.0e-4
+  stabilizingHingeFrictionParameter: 5.0e-6
+  minStabilizingHingeNormalForce: 100
+  hingeCompliance: 1.0e-8
+  hingeSpookDamping: 0.010000
+  nodesToWheelsMergeThreshold: -0.010000
+  nodesToWheelsSplitThreshold: -0.009000
+
+WHEEL_COMMON: &WheelCommon
+  jointType: revolute
+  jointAxis: Y
+  centerOfMass: [ 0.0, 0.0, 0.0 ]
+  material: AgxSpiderx2Wheel
+
+MAINWHEEL_COMMON: &MainWheelCommon
+  parent: CHASSIS
+  mass: 1.39
+  inertia: [ 0.053419, 0.0, 0.0, 0.0, 0.080128, 0.0, 0.0, 0.0, 0.053419 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.16
+        height: 0.16
+      appearance: &WheelAppearance
+        material:
+          diffuseColor: [ 0.20, 0.20, 0.20 ]
+          specularColor: [ 0.20, 0.20, 0.20 ]
+          shininess: 0.6
+    
+SPROCKET_F_COMMON: &SprocketFCommon
+  mass: 0.10
+  inertia: [ 0.000705, 0.0, 0.0, 0.0, 0.001247, 0.0, 0.0, 0.0, 0.000705 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.16
+        height: 0.10
+      appearance: &SubWheelFAppearance
+        material:
+          diffuseColor: [ 0.20, 0.20, 0.20 ]
+          specularColor: [ 0.20, 0.20, 0.20 ]
+          shininess: 0.6
+
+ROLLER_F_COMMON: &RollerFCommon
+  mass: 0.02
+  inertia: [ 0.000084, 0.0, 0.0, 0.0, 0.000132, 0.0, 0.0, 0.0, 0.000084 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.11
+        height: 0.10
+      appearance: *SubWheelFAppearance
+
+IDLER_F_COMMON: &IdlerFCommon
+  mass: 0.00
+  inertia: [ 0.000003, 0.0, 0.0, 0.0, 0.000003, 0.0, 0.0, 0.0, 0.000003 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.06
+        height: 0.10
+      appearance: *SubWheelFAppearance
+
+SPROCKET_R_COMMON: &SprocketRCommon
+  mass: 0.00
+  inertia: [ 0.000014, 0.0, 0.0, 0.0, 0.000025, 0.0, 0.0, 0.0, 0.000014 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.16
+        height: 0.10
+      appearance: &SubWheelRAppearance
+        material:
+          diffuseColor: [ 0.20, 0.20, 0.20 ]
+          specularColor: [ 0.20, 0.20, 0.20 ]
+          shininess: 0.6
+
+
+ROLLER_R_COMMON: &RollerRCommon
+  mass: 0.02
+  inertia: [ 0.000084, 0.0, 0.0, 0.0, 0.000132, 0.0, 0.0, 0.0, 0.000084 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.11
+        height: 0.10
+      appearance: *SubWheelRAppearance
+
+IDLER_R_COMMON: &IdlerRCommon
+  mass: 0.10
+  inertia: [ 0.000169, 0.0, 0.0, 0.0, 0.000175, 0.0, 0.0, 0.0, 0.000169 ]
+  <<: *WheelCommon
+  elements:
+    -
+      type: Shape
+      geometry:
+        type: Cylinder
+        radius: 0.06
+        height: 0.10
+      appearance: *SubWheelRAppearance
+
+
+CAMERA_MCM-4350FISH: &CAMERA_MCM-4350FISH
+  type: Camera
+  format: COLOR
+  fieldOfView: 90
+  width: 640
+  height: 480
+  frameRate: 30
+  elements:
+    RigidBody:
+      centerOfMass: [ -0.00003, 0.00640, 0.00007 ]
+      mass: 0.02199
+      inertia: [
+        0.00000304632,  0.00000000514,  -0.00000000873,
+        0.00000000514,  0.00000973032,  -0.00000001243,
+        -0.00000000873, -0.00000001243, 0.00000795005 ]
+      elements:
+        -
+          type: Visual
+          resource: { uri: "resource/MCM-4350FISH.wrl" }
+        -
+          type: Collision
+          elements:
+            Shape:
+              translation: [ 0, 0, 0.01175 ]
+              geometry: { type: Box, size: [ 0.064, 0.037, 0.0235 ] }
+              appearance:
+                material:
+                  diffuseColor: [ 0.25, 0.25, 0.25 ]
+                  specularColor: [ 0, 0, 0 ]
+                  shinines: 0
+
+
+
+LRF_UTM-30LX: &LRF_UTM-30LX
+  type: RangeSensor
+  name: UTM-30LX
+  scanAngle: 135
+  scanStep: 0.25
+  scanRate: 25
+  maxDistance: 30
+  elements:
+    RigidBody:
+      translation: [ 0, 0, 0.03 ]
+      centerOfMass: [ 0, 0.05544, 0.09464 ]
+      mass: 5.29071
+      inertia: [
+        0.19949663865, 0,             0,
+        0,             0.57863919195, 0.00041287283,
+        0,             0.00041287283, 0.37968799701 ]
+      elements:
+        -
+          type: Visual
+          resource: { uri: "UTM-30LN.wrl" }
+        -
+          type: Collision
+          elements:
+            Shape:
+              geometry: { type: Box, size: [ 0.060, 0.087, 0.060 ] }
+              appearance:
+                material:
+                  diffuseColor: [ 0.73, 0.36, 0.02 ]
+                  specularColor: [ 0, 0, 0 ]
+                  shinines: 0
+
+
+
+
+
+links:
+  -
+    name: CHASSIS
+    translation: [ 0, 0, 0 ]
+    jointType: free
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 600.82
+    inertia: [ 1.727954, 0.0, 0.0, 0.0, 6.787250, 0.0, 0.0, 0.0, 7.876404 ]
+    elements:
+      -
+        type: Shape
+        geometry:
+          type: Box
+          size: [ 0.90, 0.42, 0.20 ]
+        appearance:
+          material:
+            diffuseColor: [ 0.93, 0.15, 0.15 ]
+            specularColor: [ 0.93, 0.15, 0.15 ]
+            shininess: 0.6
+      - # B0010_3101<1>
+        <<: *CAMERA_MCM-4350FISH
+        name: FRONT_CAMERA
+        translation: [ 0.47400, 0, 0.13550  ]
+        rotation: [ [ 0, 0, 1, -90 ], [ 1, 0, 0, 90 ] ]
+        on: true
+#      - # B0010_3101<2>
+#        <<: *CAMERA_MCM-4350FISH
+#        name: LEFT_CAMERA
+#        translation: [ 0, 0.37850, 0.04450 ]
+#        rotation: [ 1, 0, 0, 90 ]
+#        on: false
+#      - # B0010_3101<3>
+#        <<: *CAMERA_MCM-4350FISH
+#        name: RIGHT_CAMERA
+#        translation: [ 0, -0.17850, 0.04450 ]
+#        rotation: [ [ 0, 0, 1, 180 ], [ 1, 0, 0, 90 ] ]
+#        on: false
+      - # B0010_3101<4>
+        <<: *CAMERA_MCM-4350FISH
+        name: BACK_CAMERA
+        translation: [ -0.4740, 0, 0.094 ]
+        rotation: [ [ 0, 0, 1, 90 ], [ 1, 0, 0, 90 ] ]
+        on: false
+      -
+        <<: *LRF_UTM-30LX
+        name: LRF_UTM
+        id: 0
+        translation: [0.23415, 0, 0.49750]
+        rotation: [[0, 0, 1, -90], [1, 0, 0, 90]]
+
+  -
+    name: CHASSIS2 # inertia calculation
+    parent: CHASSIS
+    translation: [ 0, 0, 0.25 ]
+    jointType: fixed
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 95.82
+    inertia: [ 1.727954, 0.0, 0.0, 0.0, 6.787250, 0.0, 0.0, 0.0, 7.876404 ]
+    elements:
+      -
+        type: Shape
+        geometry:
+          type: Box
+          size: [ 0.9, 0.42, .3 ]
+        appearance:
+          material:
+            diffuseColor: [ 0.93, 0.15, 0.15 ]
+            specularColor: [ 0.93, 0.15, 0.15 ]
+            shininess: 0.6
+  -
+    name: CHASSIS3 # inertia calculation
+    parent: CHASSIS2
+    translation: [ 0, -.1, 0.27 ]
+    jointType: fixed
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 95.82
+    inertia: [ 1.727954, 0.0, 0.0, 0.0, 6.787250, 0.0, 0.0, 0.0, 7.876404 ]
+    elements:
+      -
+        type: Shape
+        geometry:
+          type: Box
+          size: [ 0.5, 0.1, .1 ]
+      -
+        type: Shape
+        geometry:
+          type: Box
+          size: [ 0.5, 0.1, .1 ]
+        appearance:
+          material:
+            diffuseColor: [ 0.1, 0.1, 0.1 ]
+            specularColor: [ 0.1, 0.1, 0.1 ]
+            shininess: 0.6
+  -
+    name: TRACK_L
+    translation: [ 0, 0.290000, 0 ]
+    <<: *TrackCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_L
+        sprocketNames: [ SPROCKET_L ]
+        rollerNames: [ ROLLER_L ]
+        idlerNames: [ IDLER_L ]
+        <<: *TrackBeltCommon
+  -
+    name: TRACK_R
+    translation: [ 0, -0.290000, 0 ]
+    <<: *TrackCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_R
+        sprocketNames: [ SPROCKET_R ]
+        rollerNames: [ ROLLER_R ]
+        idlerNames: [ IDLER_R ]
+        nodeWidth:  0.16
+        <<: *TrackBeltCommon
+  -
+    name: SPROCKET_L
+    translation: [ 0.500000, 0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: ROLLER_L
+    translation: [ 0, 0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: IDLER_L
+    translation: [ -0.500000, 0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: SPROCKET_R
+    translation: [ 0.500000, -0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: ROLLER_R
+    translation: [ 0, -0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: IDLER_R
+    translation: [ -0.500000, -0.290000, 0 ]
+    <<: *MainWheelCommon
+  -
+    name: SPACER_LF
+    translation: [ 0.500000, 0.380000, 0.01 ]
+    jointId: 0
+    <<: *SpacerCommon
+  -
+    name: SPACER_RF
+    translation: [ 0.500000, -0.380000, 0.01 ]
+    jointId: 1
+    <<: *SpacerCommon
+  -
+    name: TRACK_LF
+    parent: SPACER_LF
+    translation: [ 0.0, 0.060000, 0 ]
+    <<: *SubTrackFCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_LF
+        sprocketNames: [ SPROCKET_LF ]
+        rollerNames: [ ROLLER_LF ]
+        idlerNames: [ IDLER_LF ]
+        <<: *SubTrackBeltCommon
+  -
+    name: TRACK_RF
+    parent: SPACER_RF
+    translation: [ 0.0, -0.060000, 0 ]
+    <<: *SubTrackFCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_RF
+        sprocketNames: [ SPROCKET_RF ]
+        rollerNames: [ ROLLER_RF ]
+        idlerNames: [ IDLER_RF ]
+        <<: *SubTrackBeltCommon
+  -
+    name: IDLER_LF
+    parent: SPACER_LF
+    translation: [ 0.560000, 0.060000, 0.0 ]
+    <<: *IdlerFCommon
+  -
+    name: ROLLER_LF
+    parent: SPACER_LF
+    translation: [ 0.280000, 0.060000, 0.0 ]
+    <<: *RollerFCommon
+  -
+    name: SPROCKET_LF
+    parent: SPACER_LF
+    translation: [ 0.0, 0.060000, 0.0 ]
+    <<: *SprocketFCommon
+  -
+    name: IDLER_RF
+    parent: SPACER_RF
+    translation: [ 0.560000, -0.060000, 0.0 ]
+    <<: *IdlerFCommon
+  -
+    name: ROLLER_RF
+    parent: SPACER_RF
+    translation: [ 0.280000, -0.060000, 0.0 ]
+    <<: *RollerFCommon
+  -
+    name: SPROCKET_RF
+    parent: SPACER_RF
+    translation: [ 0.0, -0.060000, 0.0 ]
+    <<: *SprocketFCommon
+  -
+    name: SPACER_LR
+    translation: [ -0.500000, 0.380000, 0.01 ]
+    jointId: 2
+    <<: *SpacerCommon
+  -
+    name: SPACER_RR
+    translation: [ -0.500000, -0.380000, 0.01 ]
+    jointId: 3
+    <<: *SpacerCommon
+  -
+    name: TRACK_LR
+    parent: SPACER_LR
+    translation: [ 0.0, 0.060000, 0 ]
+    <<: *SubTrackFCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_LR
+        sprocketNames: [ SPROCKET_LR ]
+        rollerNames: [ ROLLER_LR ]
+        idlerNames: [ IDLER_LR ]
+        <<: *SubTrackBeltCommon
+  -
+    name: TRACK_RR
+    parent: SPACER_RR
+    translation: [ 0.0, -0.060000, 0 ]
+    <<: *SubTrackFCommon
+    elements:
+      -
+        type: AGXVehicleContinuousTrackDevice
+        name: TRACK_RR
+        sprocketNames: [ SPROCKET_RR ]
+        rollerNames: [ ROLLER_RR ]
+        idlerNames: [ IDLER_RR ]
+        <<: *SubTrackBeltCommon
+  -
+    name: IDLER_LR
+    parent: SPACER_LR
+    translation: [ -0.560000, 0.060000, 0.0 ]
+    <<: *IdlerRCommon
+  -
+    name: ROLLER_LR
+    parent: SPACER_LR
+    translation: [ -0.280000, 0.060000, 0.0 ]
+    <<: *RollerRCommon
+  -
+    name: SPROCKET_LR
+    parent: SPACER_LR
+    translation: [ 0.0, 0.060000, 0.0 ]
+    <<: *SprocketRCommon
+  -
+    name: IDLER_RR
+    parent: SPACER_RR
+    translation: [ -0.560000, -0.060000, 0.0 ]
+    <<: *IdlerRCommon
+  -
+    name: ROLLER_RR
+    parent: SPACER_RR
+    translation: [ -0.280000, -0.060000, 0.0 ]
+    <<: *RollerRCommon
+  -
+    name: SPROCKET_RR
+    parent: SPACER_RR
+    translation: [ 0.0, -0.060000, 0.0 ]
+    <<: *SprocketRCommon
+
+
+  - # Arm 1
+    type: SubBody
+    uri: "./DoubledJACO2/Jaco2_6DoF.body"
+    parent: CHASSIS
+    translation: [ 0.16320, -0.094, 0.5150 ]
+    rotation: [ [ 0, 1, 0, 90 ], [ 0, 0, 1, 90 ] ]
+    jointType: fixed
+    jointIdOffset: 4
+    devicePrefix: ARM_
+
+#standardPose: [
+#  # Flippers
+#  0, 0, 0, 0, 
+#  # Arm 1
+#  -90, 61, 170, 300, 0, 210, 0, 0, 0, 0
+#  ]

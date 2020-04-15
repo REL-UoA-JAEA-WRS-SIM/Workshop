@@ -1,0 +1,200 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: Fiber Scope Camera 6DoF
+
+links:
+  -
+    name: BASE
+    translation: [ 0.0, 0.0, 0.1 ]
+    jointType: fixed
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 21.6
+    inertia: [
+      0.0000054, 0.0,     0.0,
+      0.0,     0.00072, 0.0,
+      0.0,     0.0,     0.00072 ]
+    elements:
+      Shape:
+        geometry:
+          type: Box
+          size: [0.2, 0.2, 0.2]
+        appearance: &BodyAppearance
+          material:
+            diffuseColor: [ 0, 0.6, 0 ]
+            specularColor: [ 0.2, 0.8, 0.2 ]
+            shininess: 0.6
+  -
+    name: LINK_1
+    parent: BASE
+    translation: [ 0, 0, 0.1 ]
+    jointType: revolute
+    jointAxis: Z
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 0
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance
+  -
+    name: LINK_2
+    parent: LINK_1
+    translation: [ 0.10, 0, 0.0 ]
+    jointType: revolute
+    jointAxis: -Y
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 1
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance
+  -
+    name: LINK_3
+    parent: LINK_2
+    translation: [ 0.10, 0, 0.0 ]
+    jointType: revolute
+    jointAxis: -Z
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 2
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance
+  -
+    name: LINK_4
+    parent: LINK_3
+    translation: [ 0.10, 0, 0.0 ]
+    jointType: revolute
+    jointAxis: Y
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 3
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance
+  -
+    name: LINK_5
+    parent: LINK_4
+    translation: [ 0.10, 0, 0.0 ]
+    jointType: revolute
+    jointAxis: Z
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 4
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance
+  -
+    name: LINK_6
+    parent: LINK_5
+    translation: [ 0.10, 0, 0.0 ]
+    jointType: revolute
+    jointAxis: -Y
+    jointRange: [ -180.0, 180.0 ]
+    maxJointVelocity: 90.0
+    jointId: 5
+    elements:
+      -
+        # Link
+        type: Transform
+        translation: [ 0.05, 0, 0 ]
+        elements:
+          RigidBody:
+            centerOfMass: [ 0, 0, 0 ]
+            mass: 0.108
+            inertia: [
+              0.0000054, 0.0,      0.0,
+              0.0,      0.00036,  0.0,
+              0.0,      0.0,      0.00036
+            ]
+            elements:
+              Shape:
+                geometry:
+                  type: Box
+                  size: [0.1, 0.02, 0.02]
+                appearance: *BodyAppearance

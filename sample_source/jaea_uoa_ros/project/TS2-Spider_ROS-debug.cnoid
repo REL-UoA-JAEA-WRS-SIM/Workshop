@@ -1,0 +1,485 @@
+items: 
+  id: 0
+  name: "Root"
+  plugin: Base
+  class: RootItem
+  children: 
+    - 
+      id: 1
+      name: "World"
+      plugin: Body
+      class: WorldItem
+      isSelected: true
+      data: 
+        collisionDetection: false
+        collisionDetector: AISTCollisionDetector
+        materialTableFile: "${SHARE}/default/materials.yaml"
+      children: 
+        - 
+          id: 2
+          name: "AGXSimulator"
+          plugin: AGXDynamics
+          class: AGXSimulatorItem
+          data: 
+            timeStep: 0.005
+            realtimeSync: true
+            recording: "full"
+            timeRangeMode: "Unlimited"
+            timeLength: 180
+            allLinkPositionOutputMode: true
+            deviceStateOutput: true
+            controllerThreads: true
+            recordCollisionData: false
+            controllerOptions: "velocity"
+            Gravity: [ 0, 0, -9.80665 ]
+            NumThreads: 1
+            ContactReduction: true
+            ContactReductionBinResolution: 3
+            ContactReductionThreshhold: 12
+            ContactWarmstarting: false
+            AutoSleep: false
+            SaveToAGXFileOnStart: false
+            DebugMessageOnConsole: 2
+          children: 
+            - 
+              id: 3
+              name: "GLVisionSimulator"
+              plugin: Body
+              class: GLVisionSimulatorItem
+              data: 
+                enabled: true
+                maxFrameRate: 1000
+                maxLatency: 1
+                recordVisionData: false
+                threadMode: Sensor
+                bestEffort: false
+                allSceneObjects: false
+                rangeSensorPrecisionRatio: 2
+                depthError: 0
+                enableHeadLight: true
+                enableAdditionalLights: true
+                antiAliasing: false
+        - 
+          id: 4
+          name: "TS2"
+          plugin: Base
+          class: SubProjectItem
+          data: 
+            filename: "${PROJECT_DIR}/cnoid/TS2.cnoid"
+            format: PROJECT
+            saveMode: "Manual save"
+        - 
+          id: 5
+          name: "AgxSpiderx2"
+          plugin: Body
+          class: BodyItem
+          isChecked: true
+          data: 
+            modelFile: "${PROJECT_DIR}/body/AgxSpiderxJACO2x2.body"
+            currentBaseLink: "CHASSIS"
+            rootPosition: [ 17.4560595, -1.64998862, 0.177176161 ]
+            rootAttitude: [ 
+              0.0111577227, -0.999937749, -5.57319052e-05, 
+              0.99993719, 0.0111577754, -0.00105836041, 
+              0.00105891637, -4.39195127e-05, 0.999999438 ]
+            jointDisplacements: [ 
+              -0.000003, -0.000002, -0.000005, -0.000002,  90.000000,  80.000000,  10.000000,  140.000000,  10.000000,  65.000000, 
+               0.000000,  0.000000, -0.000000, -0.000000,  17.746009,  0.365710,  17.367580,  21.451413,  13.266239,  20.383796, 
+               46.663682,  30.222723,  17.746323,  55.416078,  42.655116,  21.451623,  45.176041,  29.155999,  17.746365,  54.335696, 
+               39.134400,  21.451620 ]
+            jointPositions: [ 
+              -0.000000, -0.000000, -0.000000, -0.000000,  1.570796,  1.396263,  0.174533,  2.443461,  0.174533,  1.134464, 
+               0.000000,  0.000000, -0.000000, -0.000000,  0.309726,  0.006383,  0.303121,  0.374398,  0.231540,  0.355764, 
+               0.814435,  0.527486,  0.309732,  0.967193,  0.744472,  0.374401,  0.788471,  0.508868,  0.309732,  0.948337, 
+               0.683024,  0.374401 ]
+            initialRootPosition: [ 17.4560595, -1.64998862, 0.177176161 ]
+            initialRootAttitude: [ 
+              0.0111577227, -0.999937749, -5.57319052e-05, 
+              0.99993719, 0.0111577754, -0.00105836041, 
+              0.00105891637, -4.39195127e-05, 0.999999438 ]
+            initialJointPositions: [ 
+              -0.000000, -0.000000, -0.000000, -0.000000,  1.570796,  1.396263,  0.174533,  2.443461,  0.174533,  1.134464, 
+               0.000000,  0.000000, -0.000000, -0.000000,  0.309726,  0.006383,  0.303121,  0.374398,  0.231540,  0.355764, 
+               0.814435,  0.527486,  0.309732,  0.967193,  0.744472,  0.374401,  0.788471,  0.508868,  0.309732,  0.948337, 
+               0.683024,  0.374401 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isSceneBodyDraggable: true
+          children: 
+            - 
+              id: 6
+              name: "SimpleController"
+              plugin: Body
+              class: SimpleControllerItem
+              data: 
+                isNoDelayMode: false
+                controllerOptions: ""
+                controller: "SpiderROSArmController.so"
+                baseDirectory: "Controller directory"
+                reloading: false
+                exportSymbols: false
+                isOldTargetVariableMode: false
+            - 
+              id: 7
+              name: "BodyRos"
+              plugin: RosBody
+              class: BodyRosItem
+              data: 
+                jointStateUpdateRate: 100
+views: 
+  - 
+    id: 0
+    plugin: Base
+    class: ItemPropertyView
+    mounted: true
+  - 
+    id: 1
+    plugin: Base
+    class: ItemTreeView
+    mounted: true
+    state: 
+      expanded: [ 1, 2, 5, 6 ]
+  - 
+    id: 2
+    plugin: Base
+    class: MessageView
+    mounted: true
+  - 
+    id: 3
+    plugin: Base
+    class: SceneView
+    mounted: true
+    state: 
+      editMode: true
+      viewpointControlMode: thirdPerson
+      collisionLines: false
+      polygonMode: fill
+      restrictCameraRoll: true
+      verticalAxis: Z
+      lightingMode: full
+      cullingMode: enabled
+      defaultHeadLight: true
+      defaultHeadLightIntensity: 0.75
+      headLightLightingFromBack: false
+      worldLight: true
+      worldLightIntensity: 0.5
+      worldLightAmbient: 0.25
+      additionalLights: true
+      fog: true
+      floorGrid: false
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      xzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      texture: true
+      lineWidth: 1
+      pointSize: 1
+      normalVisualization: false
+      normalLength: 0.01
+      lightweightViewChange: false
+      coordinateAxes: true
+      fpsTestIteration: 1
+      upsideDown: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          isCurrent: true
+          fieldOfView: 0.698132
+          near: 0.04
+          far: 200
+          eye: [ -2.17887325, -4.2703385, 6.17380159 ]
+          direction: [ 0.479910978, 0.739649933, -0.471808679 ]
+          up: [ 0.256806079, 0.395795487, 0.881700953 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+          near: 0.04
+          far: 200
+      backgroundColor: [ 0.100000001, 0.100000001, 0.300000012 ]
+      gridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      xzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      yzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      isDedicatedItemCheckEnabled: false
+  - 
+    id: 4
+    name: "Camera Scene"
+    plugin: Base
+    class: SceneView
+    state: 
+      editMode: false
+      viewpointControlMode: thirdPerson
+      collisionLines: false
+      polygonMode: fill
+      restrictCameraRoll: true
+      verticalAxis: Z
+      lightingMode: full
+      cullingMode: enabled
+      defaultHeadLight: true
+      defaultHeadLightIntensity: 0.75
+      headLightLightingFromBack: false
+      worldLight: true
+      worldLightIntensity: 0.5
+      worldLightAmbient: 0.25
+      additionalLights: true
+      fog: true
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      xzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      texture: true
+      lineWidth: 1
+      pointSize: 1
+      normalVisualization: false
+      normalLength: 0.01
+      lightweightViewChange: false
+      coordinateAxes: true
+      fpsTestIteration: 1
+      upsideDown: false
+      backgroundColor: [ 0.100000001, 0.100000001, 0.300000012 ]
+      gridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      xzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      yzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      isDedicatedItemCheckEnabled: true
+      checked: [  ]
+  - 
+    id: 5
+    name: "シーン 3"
+    plugin: Base
+    class: SceneView
+    mounted: true
+    state: 
+      editMode: true
+      viewpointControlMode: thirdPerson
+      collisionLines: false
+      polygonMode: fill
+      restrictCameraRoll: true
+      verticalAxis: Z
+      lightingMode: full
+      cullingMode: enabled
+      defaultHeadLight: true
+      defaultHeadLightIntensity: 0.75
+      headLightLightingFromBack: false
+      worldLight: true
+      worldLightIntensity: 0.5
+      worldLightAmbient: 0.25
+      additionalLights: true
+      fog: true
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      xzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      texture: true
+      lineWidth: 1
+      pointSize: 1
+      normalVisualization: false
+      normalLength: 0.01
+      lightweightViewChange: false
+      coordinateAxes: true
+      fpsTestIteration: 1
+      upsideDown: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          isCurrent: true
+          fieldOfView: 0.698132
+          near: 0.04
+          far: 200
+          eye: [ 17.0494749, -5.29705985, 1.91740333 ]
+          direction: [ 0.24650264, 0.931343001, -0.268023623 ]
+          up: [ 0.0685776254, 0.259101856, 0.96341234 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+          near: 0.04
+          far: 200
+      backgroundColor: [ 0.100000001, 0.100000001, 0.300000012 ]
+      gridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      xzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      yzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      isDedicatedItemCheckEnabled: false
+  - 
+    id: 6
+    plugin: Body
+    class: BodyLinkView
+    mounted: true
+    state: 
+      showRotationMatrix: false
+  - 
+    id: 7
+    plugin: Body
+    class: JointDisplacementView
+    mounted: true
+    state: 
+      showSelectedJoints: false
+      showJointIDs: false
+      showJointNames: true
+      overlapJointNames: false
+      showSliders: true
+      showDials: false
+      showPhases: false
+      currentBodyItem: 5
+  - 
+    id: 8
+    plugin: Body
+    class: LinkSelectionView
+    mounted: true
+    state: 
+      listingMode: "Link List"
+      currentBodyItem: 5
+      bodyItems: 
+        - 
+          id: 5
+          selectedLinks: [ 0 ]
+toolbars: 
+  "BodyMotionGenerationBar": 
+    autoGenerationForNewBody: true
+    balancer: false
+    autoGeneration: false
+    timeScaleRatio: 1
+    preInitialDuration: 1
+    postFinalDuration: 1
+    onlyTimeBarRange: false
+    makeNewBodyItem: true
+    stealthyStepMode: true
+    stealthyHeightRatioThresh: 2
+    flatLiftingHeight: 0.005
+    flatLandingHeight: 0.005
+    impactReductionHeight: 0.005
+    impactReductionTime: 0.04
+    autoZmp: true
+    minZmpTransitionTime: 0.1
+    zmpCenteringTimeThresh: 0.03
+    zmpTimeMarginBeforeLiftingSpin: 0
+    zmpMaxDistanceFromCenter: 0.02
+    allLinkPositions: false
+    lipSyncMix: false
+    timeToStartBalancer: 0
+    balancerIterations: 2
+    plainBalancerMode: false
+    boundaryConditionType: position
+    boundarySmootherType: quintic
+    boundarySmootherTime: 0.5
+    boundaryCmAdjustment: false
+    boundaryCmAdjustmentTime: 1
+    waistHeightRelaxation: false
+    gravity: 9.8
+    dynamicsTimeRatio: 1
+  "TimeBar": 
+    minTime: 0
+    maxTime: 30
+    frameRate: 1000
+    playbackFrameRate: 60
+    idleLoopDrivenMode: false
+    currentTime: 0
+    speedScale: 1
+    syncToOngoingUpdates: true
+    autoExpansion: true
+  "LeggedBodyBar": 
+    stanceWidth: 0.15
+  "KinematicsBar": 
+    mode: AUTO
+    enablePositionDragger: true
+    penetrationBlock: false
+    collisionLinkHighlight: false
+    snapDistance: 0.025
+    penetrationBlockDepth: 0.0005
+    lazyCollisionDetectionMode: true
+  "BodyBar": 
+    current: 5
+Body: 
+  "BodyMotionEngine": 
+    updateJointVelocities: false
+  "BodySelectionManager": 
+    currentBodyItem: 5
+    currentLink: "CHASSIS"
+  "EditableSceneBody": 
+    editableSceneBodies: 
+      - 
+        bodyItem: 5
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+  "KinematicFaultChecker": 
+    checkJointPositions: true
+    angleMargin: 0
+    translationMargin: 0
+    checkJointVelocities: true
+    velocityLimitRatio: 100
+    targetJoints: all
+    checkSelfCollisions: true
+    onlyTimeBarRange: false
+  "SplineFilterDialog": 
+    isInputFrameRateSpecified: false
+    inputFrameRate: 200
+    isOutputFrameRateSpecified: false
+    outputFrameRate: 200
+viewAreas: 
+  - 
+    type: embedded
+    tabs: true
+    contents: 
+      type: splitter
+      orientation: horizontal
+      sizes: [ 261, 695 ]
+      children: 
+        - 
+          type: splitter
+          orientation: vertical
+          sizes: [ 387, 385 ]
+          children: 
+            - 
+              type: pane
+              views: [ 1 ]
+              current: 1
+            - 
+              type: pane
+              views: [ 0, 8 ]
+              current: 8
+        - 
+          type: splitter
+          orientation: vertical
+          sizes: [ 552, 220 ]
+          children: 
+            - 
+              type: splitter
+              orientation: horizontal
+              sizes: [ 127, 564 ]
+              children: 
+                - 
+                  type: pane
+                  views: [ 6, 7 ]
+                  current: 7
+                - 
+                  type: pane
+                  views: [ 5, 3 ]
+                  current: 5
+            - 
+              type: pane
+              views: [ 2 ]
+              current: 2
+layoutOfToolBars: 
+  rows: 
+    - 
+      - { name: "FileBar", x: 0, priority: 0 }
+      - { name: "ScriptBar", x: 49, priority: 0 }
+      - { name: "TimeBar", x: 98, priority: 0 }
+      - { name: "GraphBar", x: 1122, priority: 0 }
+    - 
+      - { name: "SimulationBar", x: 0, priority: 0 }
+      - { name: "SceneBar", x: 201, priority: 1 }
+      - { name: "BodyBar", x: 564, priority: 2 }
+      - { name: "KinematicsBar", x: 830, priority: 3 }
+    - 
+      - { name: "BodyMotionGenerationBar", x: 0, priority: 0 }

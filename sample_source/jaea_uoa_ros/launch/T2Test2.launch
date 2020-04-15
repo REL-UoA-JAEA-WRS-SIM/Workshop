@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="choreonoid_joy" name="choreonoid_joy" type="node" />
+  <node pkg="choreonoid_ros" name="choreonoid_ros" type="choreonoid" 
+  args="$(find jaea_uoa_ros)/project/T2Test2.cnoid --start-simulation"/> 
+</launch>

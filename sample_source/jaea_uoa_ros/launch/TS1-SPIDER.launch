@@ -1,0 +1,44 @@
+<launch>
+  <node pkg="choreonoid_joy" name="choreonoid_joy" type="node" />
+  <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid" 
+        args="$(find jaea_uoa_ros)/project/TS1-Spider_ROS.cnoid --start-simulation"/> 
+  
+  <include file="$(find large_scale_spider_description)/launch/display.launch">
+  </include>
+
+     <!-- <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan"> -->
+      <!-- <remap from="cloud_in" to="/camera/depth/points"/>
+      <remap from="scan" to="/camera/scan" />  -->
+      <!-- <remap from="scan" to="/camera/scan" /> --> 
+      <!-- <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan"> -->
+      <!-- <remap from="cloud_in" to="/AgxSpiderx2/TOP_Velodyne/point_cloud"/>
+      <rosparam> -->
+        <!-- target_frame: camera_link -->
+        <!-- target_frame: TOP_Velodyne
+        transform_tolerance: 0.01
+        min_height: 0.0
+        max_height: 1.0
+        
+        angle_min: -1.5708
+        angle_max: 1.5708
+        angle_increment: 0.0087
+        scan_time: 0.3333
+        range_min: 0.45
+        range_max: 10.0
+        use_inf: true
+         -->
+         <!-- #concurrency_level affects number of pc queued for processing and the number of threadsused
+        # 0: Detect number of cores
+        # 1: Single threaded
+        # 2: inf : Parallelism level  -->
+        <!-- concurrency_level: 1
+      </rosparam>
+    </node>  -->
+
+
+    <!-- <include file="$(find large_scale_spider_description)/launch/cartographer.launch">
+  </include> -->
+
+     <!-- <include file="$(find large_scale_spider_description)/launch/cartographer3D.launch"> 
+  </include> -->
+</launch>

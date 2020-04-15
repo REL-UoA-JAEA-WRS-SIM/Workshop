@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="choreonoid_joy" name="choreonoid_joy" type="node" />
+  <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid" 
+args="$(find jaea_uoa_ros)/project/TS1-HobbyDroneVer3_ROS.cnoid "/> 
+</launch>

@@ -1,0 +1,1 @@
+choreonoid_add_simple_controller(FSCController1 FSCController1.cpp)

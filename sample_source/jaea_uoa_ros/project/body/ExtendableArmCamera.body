@@ -1,0 +1,208 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: ExtendableArmCamera
+rootLink: CAM_ARM_BASE
+
+links:
+  -
+    name: CAM_ARM_BASE
+    jointType: fixed
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 5.0
+    inertia: [
+      0.42466, 0, 0,
+      0, 0.42466, 0,
+      0, 0, 0.016 ]
+    elements:
+      -
+        type: Shape
+        translation: [ 0.0, 0.0, -0.25 ]
+        geometry: { type: Cylinder, radius: 0.08, height: 1.0 }
+        appearance:
+          material: { diffuseColor: [ 0.2, 0.2, 0.2 ] }
+      -
+        type: Shape
+        translation: [ -0.0, 0.4, -0.16 ]
+        geometry: { type: Box, size: [0.05, 0.05, 0.25] }
+        appearance:
+          material: { diffuseColor: [ 0.2, 0.2, 0.2 ] }
+      -
+        type: Shape
+        translation: [ -0.0, 0.0, -0.16 ]
+        geometry: { type: Box, size: [0.05, 0.05, 0.25] }
+        appearance:
+          material: { diffuseColor: [ 0.2, 0.2, 0.2 ] }
+
+
+  -
+    name: CAM_ARM2
+    parent: CAM_ARM_BASE
+    translation: [ 0, 0.05, -0.25 ]
+    jointType: prismatic
+    jointAxis: Y
+    jointId: 0
+    jointRange: 1
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 4.0
+    inertia: [
+      0.33337, 0, 0,
+      0, 0.33337, 0,
+      0, 0, 0.00720 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.06, height: 1.0 }
+        appearance:
+          material: { diffuseColor: [ 0.4, 0, 0 ] }
+
+  -
+    name: CAM_ARM3
+    parent: CAM_ARM2
+    translation: [ 0, 0.05, 0 ]
+    jointType: prismatic
+    jointAxis: Y
+    jointId: 1
+    jointRange: 1
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 3.0
+    inertia: [
+      0.2500, 0, 0,
+      0, 0.2500, 0,
+      0, 0, 0.00375 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.05, height: 1.0 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.4, 0 ] }
+  -
+    name: CAM_ARM4
+    parent: CAM_ARM3
+    translation: [ 0, 0.05, 0 ]
+    jointType: prismatic
+    jointAxis: Y
+    jointId: 2
+    jointRange: 1
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 2
+    inertia: [
+      0.1674, 0, 0,
+      0, 0.1674, 0,
+      0, 0, 0.0016 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.04, height: 1.0 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.0, 0.4 ] }
+
+
+  -
+    name: CAM_ARM5
+    parent: CAM_ARM4
+    translation: [ 0, 0.53, 0 ]
+    #rotation: [1,0,0, 90]
+    jointType: revolute
+    jointAxis: Y
+    jointId: 3
+    jointRange: 90
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 1
+    inertia: [
+      0.000433333, 0, 0,
+      0, 0.000433333, 0,
+      0, 0, 0.00045 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.03, height: 0.05 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.4, 0.4 ] }
+
+  -
+    name: CAM_ARM6
+    parent: CAM_ARM5
+    translation: [ 0.0, 0.0, 0.0 ]
+    rotation: [[0,0,1, -90],[0,1,0, -90]]
+    jointType: revolute
+    jointAxis: Y
+    jointId: 4
+    jointRange: 90
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 1
+    inertia: [
+      0.000433333, 0, 0,
+      0, 0.000433333, 0,
+      0, 0, 0.00045 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.03, height: 0.05 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.4, 0.4 ] }
+
+  -
+    name: CAM_ARM7
+    parent: CAM_ARM6
+    translation: [ 0.0, 0.0, 0.0 ]
+    rotation: [0,0,1, 90]
+    jointType: revolute
+    jointAxis: Y
+    jointId: 5
+    jointRange: 90
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 1
+    inertia: [
+      0.000433333, 0, 0,
+      0, 0.000433333, 0,
+      0, 0, 0.00045 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.03, height: 0.05 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.4, 0.4 ] }
+
+  -
+    name: CAM_TIP
+    parent: CAM_ARM7
+    translation: [ 0, 0.0, 0.05 ]
+    rotation: [1,0,0,90]
+    jointType: fixed
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 0.3
+    inertia: [
+      0.000250675, 0, 0,
+      0, 0.000250675, 0,
+      0, 0, 0.00000135 ]
+    elements:
+      -
+        type: Shape
+        geometry: { type: Cylinder, radius: 0.003, height: 0.1 }
+        appearance:
+          material: { diffuseColor: [ 0.0, 0.4, 0 ] }
+
+      - 
+        type: Camera
+        name: miniCam
+        translation: [ 0.0, 0.055, 0.0 ]
+        rotation: [[1,0,0,90], [0,0,1,270]]
+        format: COLOR
+        fieldOfView: 62
+        nearClipDistance: 0.02
+        width: 640
+        height: 480
+        frameRate: 30
+        elements:
+          Shape:
+            rotation: [1,0,0,90]
+            geometry:
+              type: Cylinder
+              radius: 0.003
+              height: 0.01
+            appearance:
+              material:
+                diffuseColor: [ 0.2, 0.2, 0.8 ]
+                specularColor: [ 0.6, 0.6, 1.0 ]
+                shininess: 0.6

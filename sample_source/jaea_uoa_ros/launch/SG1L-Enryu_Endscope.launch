@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="choreonoid_joy" name="choreonoid_joy" type="node" />
+  <node pkg="choreonoid_ros" name="choreonoid" type="choreonoid"
+args="$(find jaea_uoa_ros)/project/SG1L-Enryu_Endscope_ROS.cnoid --start-simulation"/> 
+<include file="$(find enryu_description)/launch/display.launch"></include>
+</launch>

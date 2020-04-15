@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>jaea_uoa_ros</name>
+  <version>1.7.0</version>
+  <description>
+    WRS project directory
+  </description>
+  <maintainer email="abe.fumiaki@jaea.go.jp">Fumiaki Abe</maintainer>
+  <license>MIT</license>
+  <author email="abe.fumiaki@jaea.go.jp">Fumiaki Abe</author>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>choreonoid</depend>
+  <depend>choreonoid_ros_plugin</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>

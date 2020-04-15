@@ -1,0 +1,23 @@
+<robot name="DoubledJACO2">
+  <link name="BASE">
+    <inertial>
+      <mass value="0.93568" />
+      <origin xyz="0.0 0.0 0.251" rpy="0 -0 0" />
+      <inertia ixx="0.007610166892544" ixy="0.0" ixz="0.0" iyy="0.007610166892544" iyz="0.0" izz="0.002994176" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0" />
+      <geometry>
+       <!-- <mesh -->
+        <mesh filename="package://kinova_description/meshes/DoubledJACO2-BASE-visual-0"/>
+        <!-- <mesh filename="./DoubledJACO2-BASE-visual-0.dae" scale="1.0 1.0 1.0" /> -->
+      </geometry> 
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.08" rpy="0.0 -0.0 0.0" />
+      <geometry>
+        <cylinder radius="0.04" length="0.15" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

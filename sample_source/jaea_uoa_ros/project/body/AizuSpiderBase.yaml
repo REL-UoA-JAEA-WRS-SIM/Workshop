@@ -1,0 +1,78 @@
+format: CrawlerRobotBuilderYaml
+formatVersion: 1.0
+name: AizuSpiderBase
+configs: 
+  - 
+    name: CHASSIS
+    mass: 47.91
+    xSize: 0.45
+    ySize: 0.21
+    zSize: 0.1
+    diffuseColor: [ 0.9294118, 0.1529412, 0.1529412 ]
+    elements:
+  - 
+    name: TRACK
+    mass: 3.13
+    radius: 0.08
+    width: 0.08
+    wheelBase: 0.5
+    diffuseColor: [ 0.2, 0.2, 0.2 ]
+  - 
+    name: FRONTSUBTRACK
+    mass: 3.07
+    forwardRadius: 0.03
+    backwardRadius: 0.08
+    width: 0.05
+    wheelBase: 0.28
+    on: true
+    diffuseColor: [ 0.2, 0.2, 0.2 ]
+  - 
+    name: REARSUBTRACK
+    mass: 3.07
+    forwardRadius: 0.08
+    backwardRadius: 0.03
+    width: 0.05
+    wheelBase: 0.28
+    on: true
+    diffuseColor: [ 0.2, 0.2, 0.2 ]
+  - 
+    name: SPACER
+    mass: 0.71
+    radius: 0.06
+    width: 0.01
+    diffuseColor: [ 0.9882353, 0.9137255, 0.3058824 ]
+  - 
+    name: TRACKBELT
+    numberOfNodes: 80
+    nodeThickness: 0.01
+    nodeWidth: 0.08
+    nodeThickerThickness: 0.01
+    useThickerNodeEvery: 5
+    nodeDistanceTensionMantissa: 5
+    nodeDistanceTensionExponent: 5
+    stabilizingHingeFrictionParameterMantissa: 5
+    stabilizingHingeFrictionParameterExponent: 7
+    minStabilizingHingeNormalForce: 100
+    hingeComplianceMantissa: 1
+    hingeComplianceExponent: 6
+    hingeSpookDamping: 0.01
+    nodesToWheelsMergeThreshold: -0.01
+    nodesToWheelsSplitThreshold: -0.009
+    on: true
+  - 
+    name: SUBTRACKBELT
+    numberOfNodes: 50
+    nodeThickness: 0.01
+    nodeWidth: 0.04
+    nodeThickerThickness: 0.01
+    useThickerNodeEvery: 6
+    nodeDistanceTensionMantissa: 2
+    nodeDistanceTensionExponent: 6
+    stabilizingHingeFrictionParameterMantissa: 5
+    stabilizingHingeFrictionParameterExponent: 8
+    minStabilizingHingeNormalForce: 100
+    hingeComplianceMantissa: 1
+    hingeComplianceExponent: 6
+    hingeSpookDamping: 0.01
+    nodesToWheelsMergeThreshold: -0.01
+    nodesToWheelsSplitThreshold: -0.009
