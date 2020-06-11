@@ -22,7 +22,7 @@ void inverse(double j[2][2], double jinv[2][2]);
 int main()
 {
 	//  Goal hand position
-	double pg[2] = { 0.0, 1.0 };
+	double pg[2] = { 0.0, 0.1 };
 
 	//  Initial joint angle: {q1, q2} [rad]
 	double qi[2] = {0.1, 0.1};
@@ -122,8 +122,8 @@ void inverse_kinematics(double pg[2], double q0[2], double qg[2])
 void forward_kinematics(double q[2], double p[2])
 {
 	//  Link parameters
-	const double L1 = 1.0;
-	const double L2 = 1.0;
+	const double L1 = 0.1;
+	const double L2 = 0.1;
 
 	//  x component
 	p[0] = L1 * cos(q[0]) + L2 * cos(q[0] + q[1]);
@@ -139,8 +139,8 @@ void forward_kinematics(double q[2], double p[2])
 void jacobian(double q[2], double j[2][2])
 {
 	//  Link parameters
-	const double L1 = 1.0;
-	const double L2 = 1.0;
+	const double L1 = 0.1;
+	const double L2 = 0.1;
 
 	j[0][0] = -L1 * sin(q[0]) - L2 * sin(q[0] + q[1]);
 	j[0][1] = -L2 * sin(q[0] + q[1]);

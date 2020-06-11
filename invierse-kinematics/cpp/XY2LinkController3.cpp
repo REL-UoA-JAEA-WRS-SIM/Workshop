@@ -1,8 +1,8 @@
 /*
 	XY2LinkController3.cpp
-		Control each of the joints to a given angle
-        Author: Keitaro Naruse
-		Date: 2020-06-03
+		Solve inverse kinematics in control() by numerical Jacobain
+		Author: Keitaro Naruse
+		Date: 2020-06-10
 */
 
 #include <cmath>
@@ -69,17 +69,29 @@ private:
     Eigen::Matrix2d jacobian(const Eigen::Vector2d& q)
     {
         //  Link parameters
-        //  リンクパラメータ
         const double L1 = 0.1;
         const double L2 = 0.1;
+        const double dq = 1E-9;
         Eigen::Matrix2d	j;
-        
-        //  Jacobian is given as follows
-        //  ヤコビアンは次の式で与えらえる
-        j(0, 0) = -L1 * sin(q(0)) - L2 * sin(q(0) + q(1));
-        j(0, 1) = -L2 * sin(q(0) + q(1));
-        j(1, 0) = L1 * cos(q(0)) + L2 * cos(q(0) + q(1));
-        j(1, 1) = L2 * cos(q(0) + q(1));
+        Eigen::Vector2d dq1(dq, 0), dq2(0, dq);
+        Eigen::Vector2d p, pdp1, pdp2;
+
+        //	forward kinematics of the original angle vector q
+        //	元のqによる手先の位置ベクトル
+        p = forward_kinematics(q);
+        //	forward kinematics of the angle vector q+dq1 (q1 is increased a small amount) 
+        //	q+dq1 (q1がごく少量増加)による手先の位置ベクトル
+        pdp1 = forward_kinematics(q + dq1);
+        //	forward kinematics of the angle vector q+dq2 (q2 is increased a small amount) 
+        //	q+dq2 (q2がごく少量増加)による手先の位置ベクトル
+        pdp2 = forward_kinematics(q + dq2);
+
+        //	dx/dt = ((x+dx)-x)/((q+dq1) - q1) 
+        //	dy/dt = ((y+dy)-y)/((q+dq1) - q1) 
+        j.col(0) = (pdp1 - p) / dq;
+        //	dx/dt = ((x+dx)-x)/((q+dq2) - q2) 
+        //	dy/dt = ((y+dy)-y)/((q+dq2) - q2) 
+        j.col(1) = (pdp2 - p) / dq;
 
         return(j);
     }
@@ -127,9 +139,6 @@ private:
 public:
     virtual bool initialize(SimpleControllerIO* io) override
     {
-        //  手先の目標位置
-        Eigen::Vector2d pg;
-
         //  Get a joint from a body 
         //  関節をボディモデルから取得
         joint[0] = io -> body() -> link("LINK_1");
@@ -152,9 +161,13 @@ public:
         //  as an ordinary array in c++
         p_ref[0] = 0.0;
         p_ref[1] = 0.1;
-        //  as a vector in Eigen
-        pg(0) = p_ref[0];
-        pg(1) = p_ref[1];
+        return true;
+    }
+    
+    virtual bool control() override
+    {
+        //  Inverse kinematics solution part: We find q_ref
+        //  逆運動学計算部分: q_refを求める
 
         //	Iteration number
         //	繰り返し回数
@@ -166,6 +179,9 @@ public:
         //	逆運動学計算のための係数
         double	a = 0.1;
 
+        //  Reference hand position vector 
+        //  手先の目標位置
+        Eigen::Vector2d pg;
         //  Current joint angle vector: {q1, q2} [rad]
         //  現在の関節角度ベクトル
         Eigen::Vector2d	q;
@@ -176,10 +192,14 @@ public:
         //  ヤコビアン
         Eigen::Matrix2d j, pinv;
 
+        //  as a vector in Eigen
+        pg(0) = p_ref[0];
+        pg(1) = p_ref[1];
+
         //	Set a current joint angle to a vector for inverse kinematic ssolution
         //	現在のボディモデルの関節角度を逆運動学計算用の関節角度ベクトルに与える
-        q(0) = joint[0] -> q(); // input
-        q(1) = joint[1] -> q(); // input
+        q(0) = joint[0]->q(); // input
+        q(1) = joint[1]->q(); // input
 
 
         //	Iterated calculation for innverse kinematics
@@ -208,11 +228,9 @@ public:
         q_ref[0] = fmod(q(0), 2 * M_PI);
         q_ref[1] = fmod(q(1), 2 * M_PI);
 
-        return true;
-    }
+        //  Control part part: We find q_ref
+        //  Control a joint to a reference angle
     
-    virtual bool control() override
-    {
         //  PD gains
         //  PD制御のためのゲイン
         static const double P[2] = { 10.0, 10.0 };
@@ -220,7 +238,7 @@ public:
 
         //  Joint angle
         //  関節角度
-        double q[2];
+        double q_curr[2];
         //  Joint angular velocity
         //  関節角速度
         double dq[2];
@@ -231,17 +249,17 @@ public:
         for (int i = 0; i < 2; i++) {
             //  Get a joint angle from a body model
             //  ボディモデルから関節角度を取得する
-            q[i] = joint[i] -> q(); // input
+            q_curr[i] = joint[i] -> q(); // input
             //  Calculate a joint angular velocity
             //  １時刻前の関節角度を使って，関節角速度を計算する
-            dq[i] = (q[i] - q_prev[i]) / dt;
+            dq[i] = (q_curr[i] - q_prev[i]) / dt;
             //  Determine a joint torque 
             //  PD制御で関節トルクを決定する
-            joint[i]->u() = P[i] * (q_ref[i] - q[i]) + D[i] * (dq_ref[i] - dq[i]); // output
+            joint[i]->u() = P[i] * (q_ref[i] - q_curr[i]) + D[i] * (dq_ref[i] - dq[i]); // output
 
             //  Store a current joint angle as a previous one
             //  現在の関節角度を一つ前のものとして保存する
-            q_prev[i] = q[i];
+            q_prev[i] = q_curr[i];
         }
 
         return true;

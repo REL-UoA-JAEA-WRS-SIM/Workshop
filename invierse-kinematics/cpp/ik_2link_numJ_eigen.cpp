@@ -1,8 +1,8 @@
 ﻿/*
-	ik_2link_symJ_eigen_cpp
+	ik_2link_numJ_eigen_cpp
 		Sample program for inverse kinematics of 2-link robot arm with Eigen
 		Author: Keitaro Naruse
-		Date: 2020-06-01
+		Date: 2020-06-08
 */
 
 #define _USE_MATH_DEFINES // for C++
@@ -71,25 +71,41 @@ Eigen::Vector2d forward_kinematics(const Eigen::Vector2d& q)
 	return(p);
 }
 
-
 /*
 	jacobian()
-		Find Jacobian symbolically 
-		(Give Jacobian directly with partial derivertives of forward kinematics)
+		Find Jacobian numerically
+		(Give Jacobian by an increment of a small displacement of forward kinematics)
+
 		Input:	q, Joint angle vevtor = {q1, q2}
 		Output:	j, Jacobain
+
 */
 Eigen::Matrix2d jacobian(const Eigen::Vector2d& q)
 {
 	//  Link parameters
 	const double L1 = 0.1;
 	const double L2 = 0.1;
+	const double dq = 1E-9;
 	Eigen::Matrix2d	j;
+	Eigen::Vector2d dq1(dq, 0), dq2(0, dq);
+	Eigen::Vector2d p, pdp1, pdp2;
 
-	j(0, 0) = -L1 * sin(q(0)) - L2 * sin(q(0) + q(1));
-	j(0, 1) = -L2 * sin(q(0) + q(1));
-	j(1, 0) = L1 * cos(q(0)) + L2 * cos(q(0) + q(1));
-	j(1, 1) = L2 * cos(q(0) + q(1));
+	//	forward kinematics of the original angle vector q
+	//	元のqによる手先の位置ベクトル
+	p = forward_kinematics(q);
+	//	forward kinematics of the angle vector q+dq1 (q1 is increased a small amount) 
+	//	q+dq1 (q1がごく少量増加)による手先の位置ベクトル
+	pdp1 = forward_kinematics(q + dq1);
+	//	forward kinematics of the angle vector q+dq2 (q2 is increased a small amount) 
+	//	q+dq2 (q2がごく少量増加)による手先の位置ベクトル
+	pdp2 = forward_kinematics(q + dq2);
+
+	//	dx/dt = ((x+dx)-x)/((q+dq1) - q1) 
+	//	dy/dt = ((y+dy)-y)/((q+dq1) - q1) 
+	j.col(0) = (pdp1 - p) / dq;
+	//	dx/dt = ((x+dx)-x)/((q+dq2) - q2) 
+	//	dy/dt = ((y+dy)-y)/((q+dq2) - q2) 
+	j.col(1) = (pdp2 - p) / dq;
 
 	return(j);
 }
@@ -117,7 +133,7 @@ Eigen::Matrix2d pseudo_inverse(const Eigen::Matrix2d& m)
 	for (int i = 0; i < 2; ++i) {
 		//	If a diagonal componets is very small, set sigma_inverse as 0
 		//	対角成分の値が小さかったら，０を与える
-		if (1E-9 > fabs(sigma(i)) ) {
+		if (1E-9 > fabs(sigma(i))) {
 			sigma_inverse(i) = 0.0;
 		}
 		//	If a diagonal componets is large enoughr, set sigma_inverse as an inverse of it
@@ -128,7 +144,7 @@ Eigen::Matrix2d pseudo_inverse(const Eigen::Matrix2d& m)
 		}
 	}
 	//	Calulate psuedo inverse matrix from singular value decomposition
-	m_psuedo_inverse = svd.matrixV() *  sigma_inverse.asDiagonal() * svd.matrixU().transpose();
+	m_psuedo_inverse = svd.matrixV() * sigma_inverse.asDiagonal() * svd.matrixU().transpose();
 
 	return(m_psuedo_inverse);
 }
@@ -186,7 +202,7 @@ Eigen::Vector2d inverse_kinematics(const Eigen::Vector2d& pg, const Eigen::Vecto
 
 		//	Instead, I use psuedo inverse
 		//	代わりに疑似逆行列を用いる
-		q +=  a * pseudo_inverse(j) * (pg - p);
+		q += a * pseudo_inverse(j) * (pg - p);
 	}
 
 	//	final joint angles
