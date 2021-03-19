@@ -1,6 +1,6 @@
 ﻿/*
 	ik_3link_numJ_eigen.cpp
-		Sample program for inverse kinematics of 2-link robot arm with Eigen
+		Sample program for inverse kinematics of 3-link robot arm with Eigen
 		Author: Keitaro Naruse
 		Date: 2020-06-10
 */
